@@ -1,0 +1,125 @@
+/* RESET  */
+
+*,
+::after,
+::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* GENERAL */
+
+body {
+  height: 100vh;
+  font-family: "Montserrat", sans-serif;
+  background: #f2f2f2;
+}
+
+/* MAIN */
+
+main {
+  display: grid;
+  padding: 12% 5% 5% 5%;
+  gap: 25px;
+  grid-template-columns: repeat(4, 1fr);
+  place-items: center;
+}
+
+.div-container {
+  position: relative;
+  box-shadow: 5px 5px 15px #000;
+  height: 350px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 50% 1fr;
+  grid-template-rows: 60% 1fr 1fr 1fr 1fr;
+  text-align: center;
+  place-items: center;
+  padding-bottom: 15px;
+}
+
+.coverage {
+  width: 100%;
+  height: 100%;
+  padding: 15% 5%;
+  grid-area: 1 / 1 / 2 /2;
+}
+
+.amazon-logo {
+  width: 50px;
+  height: 50px;
+  transition: transform 1s;
+}
+
+.amazon-logo:hover {
+  transform: scale(1.2);
+}
+
+.amazon-link {
+  grid-area: 5 / 2 / 6 / 3;
+  margin: 10px;
+}
+
+.div-container h2 {
+  margin-right: 0.5rem;
+  font-size: 1.2rem;
+  grid-area: 1 / 2 / 2 / 3;
+}
+.div-container p {
+  padding: 5px;
+}
+
+.author {
+  grid-area: 2 / 1 / 3 / 3;
+}
+
+.date {
+  grid-area: 3 / 1 / 4 / 3;
+}
+
+.pages {
+  grid-area: 4 / 1 / 5 / 3;
+}
+
+.suppr-button {
+  border-style: none;
+  grid-area: 1 / 2 / 2 / 3;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}
+
+.suppr-img {
+  width: 25px;
+  height: 25px;
+  transition: transform 1s;
+}
+
+.suppr-img:hover {
+  transform: scale(1.5);
+}
+
+#select-author {
+  position: absolute;
+  top: 8rem;
+  padding: 10px;
+  left: 100px;
+  font-size: 1rem;
+}
+
+.add-div {
+  position: absolute;
+  height: 50px;
+  top: 8rem;
+  right: 50px;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.add-div img {
+  margin: 5px;
+  width: 25px;
+  height: 25px;
+}

@@ -1,0 +1,40 @@
+/* HEADER  */
+
+header {
+  width: 100%;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #f1f1f1;
+  background: midnightblue;
+  z-index: 10;
+}
+
+h1 {
+  font-size: 3.5em;
+  font-weight: bold;
+  margin: 10px 0 5px 0;
+}
+
+.logo-livre {
+  width: 5rem;
+  height: 5rem;
+  position: absolute;
+  top: 1rem;
+  left: 5rem;
+}
+
+.logo-livre-2 {
+  width: 5rem;
+  height: 5rem;
+  position: absolute;
+  top: 1rem;
+  right: 5rem;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  padding-bottom: 15px;
+}

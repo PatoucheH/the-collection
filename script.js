@@ -46,8 +46,6 @@ const collection = [
   },
 ];
 
-const main = document.querySelector("main");
-
 function createABookDiv(book) {
   // création div parente
   const newDiv = document.createElement("div");
@@ -115,39 +113,37 @@ function createABookDiv(book) {
   return newDiv;
 }
 
+const main = document.querySelector("main");
+
 //boucle sur tout les objets du tableau collection pour à chaque fois créer et ajouté une div
 collection.forEach((book) => {
   main.appendChild(createABookDiv(book));
 });
 
-// A FINIR / RANGER
+// TRIER PAR AUTEUR LES LIVRES
 
 const select = document.getElementById("select-author");
 const divContainer = document.querySelectorAll(".div-container");
-
 const authorName = document.querySelectorAll("p.author");
 const authors = [];
 
+//boucler pour obtenier tout les noms des auteurs
 authorName.forEach((elem) =>
   authors.push(elem.textContent.replace("Author : ", ""))
 );
 
-// console.log(authors);
 const setAuthor = new Set(authors);
-// console.log(setAuthor);
-
 const arrayAuthor = Array.from(setAuthor);
 
-// console.log(arrayAuthor);
-
+// boucler pour créer une option dans le select pour chaque auteur
 arrayAuthor.forEach((author) => {
   const option = document.createElement("option");
   option.textContent = author;
   option.value = author.toLowerCase();
   select.appendChild(option);
-  //   console.log(option.value);
 });
 
+// ajouter un addEventListener pour qu'à chaque fois que l'auteur est choisi les autres livres disparaissent
 select.addEventListener("change", (e) => {
   divContainer.forEach((div) => {
     const name = div.querySelector(".author").textContent;

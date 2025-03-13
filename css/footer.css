@@ -1,0 +1,17 @@
+/* FOOTER  */
+
+footer {
+    display: flex;
+    height: 5vh;
+    width: 100%;
+    position: fixed;
+    top: calc(100% - 5vh);
+    background: #222;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .footer-text {
+    color: #f1f1f1;
+  }
+  
