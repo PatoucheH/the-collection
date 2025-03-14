@@ -1,4 +1,4 @@
-const collection = [
+let collection = [
   {
     name: "Plus malin que le diable",
     author: "Napoleon Hill",
@@ -46,49 +46,65 @@ const collection = [
   },
 ];
 
-function createABookDiv(book) {
-  // création div parente
+const main = document.querySelector("main");
+const buttonToAdd = document.getElementById("submit-button");
+const form = document.getElementById("book-form");
+const buttonToForm = document.getElementById("go-to-form");
+
+collection.forEach((books, index) => {
+  localStorage.setItem(`books_${index}`, JSON.stringify(books));
+});
+
+/**
+ *
+ * @param {*} book
+ * @returns
+ * CREATE A DIV WITH COLLECTION INFORMATIONS
+ */
+
+function createABookDiv(book, index) {
+  // creation parent div
   const newDiv = document.createElement("div");
 
-  // création image
+  // creation image
   const img = document.createElement("img");
   img.src = book.coverage;
   img.alt = `Couverture de ${book.name}`;
   img.classList.add("coverage");
 
-  // création titre livre
+  // creation title of the book
   const title = document.createElement("h2");
   title.textContent = book.name;
 
-  // création nom auteur
+  // creation author name
   const author = document.createElement("p");
   author.textContent = `Author : ${book.author}`;
   author.classList.add("author");
 
-  // création date de parution
+  // creation of parution date
   const date = document.createElement("p");
   date.textContent = `Date of publication : ${book.publicationDate}`;
   date.classList.add("date");
 
-  // création nombres de pages
+  // creation number of pages
   const pages = document.createElement("p");
   pages.textContent = `Number of pages : ${book.pages}`;
   pages.classList.add("pages");
 
-  // création logo shop amazon
+  // creation amazon logo
   const amazon = document.createElement("img");
   amazon.src = "assets/amazon.png";
   amazon.alt = "Logo amazon";
   amazon.classList.add("amazon-logo");
 
-  // création lien shop amazon
+  // creation of the amazon link
   const amazonLink = document.createElement("a");
   amazonLink.setAttribute("href", book.amazon);
   amazonLink.setAttribute("target", "_blank");
   amazonLink.appendChild(amazon);
   amazonLink.classList.add("amazon-link");
 
-  //création bouton suppr
+  //creation of suppr button
   const supprButton = document.createElement("button");
   const supprImg = document.createElement("img");
   supprImg.src = "assets/fermer.png";
@@ -97,9 +113,10 @@ function createABookDiv(book) {
   supprButton.classList.add("suppr-button");
   supprButton.addEventListener("click", (e) => {
     main.removeChild(newDiv);
+    localStorage.removeItem(`books_${index}`);
   });
 
-  // ajout de tout dans la div parente
+  // add everything in the parent div
   newDiv.appendChild(img);
   newDiv.appendChild(title);
   newDiv.appendChild(author);
@@ -113,48 +130,105 @@ function createABookDiv(book) {
   return newDiv;
 }
 
-const main = document.querySelector("main");
+/**
+ *
+ * @param {array} collection of object
+ * LOOP ON EVERY ITEMS AND ADD THEM TO THE MAIN
+ */
 
-//boucle sur tout les objets du tableau collection pour à chaque fois créer et ajouté une div
-collection.forEach((book) => {
-  main.appendChild(createABookDiv(book));
-});
-
-// TRIER PAR AUTEUR LES LIVRES
-
-const select = document.getElementById("select-author");
-const divContainer = document.querySelectorAll(".div-container");
-const authorName = document.querySelectorAll("p.author");
-const authors = [];
-
-//boucler pour obtenier tout les noms des auteurs
-authorName.forEach((elem) =>
-  authors.push(elem.textContent.replace("Author : ", ""))
-);
-
-const setAuthor = new Set(authors);
-const arrayAuthor = Array.from(setAuthor);
-
-// boucler pour créer une option dans le select pour chaque auteur
-arrayAuthor.forEach((author) => {
-  const option = document.createElement("option");
-  option.textContent = author;
-  option.value = author.toLowerCase();
-  select.appendChild(option);
-});
-
-// ajouter un addEventListener pour qu'à chaque fois que l'auteur est choisi les autres livres disparaissent
-select.addEventListener("change", (e) => {
-  divContainer.forEach((div) => {
-    const name = div.querySelector(".author").textContent;
-    const cleanName = name.replace("Author : ", "").toLowerCase();
-
-    if (select.value === "all") {
-      div.style.display = "grid";
-    } else if (select.value !== cleanName) {
-      div.style.display = "none";
-    } else {
-      div.style.display = "grid";
-    }
+function createUIMain(collection) {
+  collection.forEach((book, index) => {
+    main.appendChild(createABookDiv(book, index));
   });
+}
+
+// SORT BY AUTHOR NAME
+
+function createSelectWithAuthorsName(collection) {
+  // create an array with the author name
+
+  const divContainer = document.querySelectorAll(".div-container");
+  const authors = [];
+  const select = document.getElementById("select-author");
+
+  for (let i = 0; i < collection.length; i++) {
+    authors.push(collection[i].author);
+  }
+
+  const setAuthor = new Set(authors);
+  const arrayAuthor = Array.from(setAuthor);
+
+  // loop to create an option for each author name
+
+  arrayAuthor.forEach((author) => {
+    const option = document.createElement("option");
+    option.textContent = author;
+    option.value = author.toLowerCase();
+    select.appendChild(option);
+  });
+
+  //add eventlistener to suppr books which don't match with the author name choose
+
+  select.addEventListener("change", (e) => {
+    divContainer.forEach((div) => {
+      const authorName = div.querySelector(".author").textContent;
+      const cleanName = authorName.replace("Author : ", "").toLowerCase();
+      if (select.value === "all") {
+        div.style.display = "grid";
+      } else if (select.value !== cleanName) {
+        div.style.display = "none";
+      } else if (select.value === cleanName) {
+        div.style.display = "grid";
+      }
+    });
+  });
+}
+
+//ADD A NEW BOOK
+
+function addANewBook() {
+  const nameInput = document.getElementById("name-book").value;
+  const authorInput = document.getElementById("author-name").value;
+  const dateInput = document.getElementById("date-of-publication").value;
+  const pagesInput = document.getElementById("pages").value;
+  
+  // const imgInput = document.getElementById("image");
+
+  // const imgFile = imgInput.files[0];
+  // const fr = new FileReader();
+  // fr.onload = () => {
+  //   fr.result;
+  // };
+
+  // const img = fr.readAsDataURL(imgFile);
+
+  const newBook = {
+    name: nameInput,
+    author: authorInput,
+    publicationDate: dateInput,
+    pages: pagesInput,
+    // coverage: img,
+    amazon: "#",
+  };
+
+  localStorage.setItem(`books_${localStorage.length}`, JSON.stringify(newBook));
+}
+
+function createMain() {
+  if (window.location.pathname.endsWith("index.html")) {
+    createUIMain(collection);
+    createSelectWithAuthorsName(collection);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  collection = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    collection.push(JSON.parse(localStorage.getItem(`books_${i}`)));
+  }
+  createMain();
 });
+
+if (window.location.pathname.endsWith("form.html")) {
+  buttonToAdd.addEventListener("click", addANewBook);
+}

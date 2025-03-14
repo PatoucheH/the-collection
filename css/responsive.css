@@ -84,10 +84,6 @@
     padding: 5px;
   }
 
-  label {
-    font-size: 0.9rem;
-  }
-
   .add-div {
     top: 9.5rem;
   }
@@ -106,6 +102,9 @@
 
   .add-div {
     top: 11rem;
+  }
+  form label {
+    font-size: 0.9rem;
   }
 }
 
