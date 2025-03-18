@@ -191,7 +191,7 @@ function addANewBook() {
   const authorInput = document.getElementById("author-name").value;
   const dateInput = document.getElementById("date-of-publication").value;
   const pagesInput = document.getElementById("pages").value;
-  
+
   // const imgInput = document.getElementById("image");
 
   // const imgFile = imgInput.files[0];
@@ -215,10 +215,8 @@ function addANewBook() {
 }
 
 function createMain() {
-  if (window.location.pathname.endsWith("index.html")) {
-    createUIMain(collection);
-    createSelectWithAuthorsName(collection);
-  }
+  createUIMain(collection);
+  createSelectWithAuthorsName(collection);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
